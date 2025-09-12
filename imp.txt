@@ -1,0 +1,119 @@
+//await page.waitForLoadState("networkidle") it can nicely wait for network provided by utility playwright
+
+also you can make the multiple browser context and run them at once
+//command to run test in trace view along - npx playwright test --ui
+
+=== Playwright Agents Overview (September 12, 2025) ===
+
+=== Playwright MCP Accessibility Snapshots (September 12, 2025) ===
+
+Playwright MCP uses accessibility snapshots as a key feature for web automation. Here's how it works:
+
+1. Snapshot Creation:
+   - Instead of using pixel-based visual analysis
+   - Creates a structured representation of the page through the accessibility tree
+   - Provides clean, structured data that LLMs can easily understand and process
+
+2. Key Benefits:
+   - Fast & Lightweight: No need for heavy vision models or image processing
+   - Reliable: Uses semantic structure rather than visual appearance
+   - Deterministic: Based on page structure, not visual positions
+   - LLM-Friendly: Provides data in a format that AI can easily parse
+
+3. How It Works:
+   - browser_snapshot tool captures the page state
+   - Represents elements with their roles, names, and relationships
+   - Creates a hierarchical structure similar to what screen readers use
+   - Includes interactive properties (clickable, editable, etc.)
+
+4. Advantages Over Traditional Automation:
+   - More stable than pixel-based or coordinate-based automation
+   - Better handling of dynamic content
+   - More accessible and semantic approach to web interaction
+   - Closer to how humans understand web pages
+
+5. Practical Usage:
+   - AI can understand page structure and content
+   - Can locate elements by their semantic meaning
+   - Makes decisions based on accessibility tree rather than visual layout
+   - More robust automation across different screen sizes and layouts
+
+This approach makes web automation more reliable and maintainable while being more efficient than traditional visual-based approaches.
+
+Playwright Agents is a powerful automation solution that combines AI with browser automation. Here's a comprehensive overview:
+
+1. What is Playwright MCP (Model Context Protocol)?
+- It's a communication standard that allows AI agents to control web browsers
+- Built on top of Playwright's core technology
+- Uses accessibility snapshots instead of pixel-based interaction
+- Provides a structured, reliable way for AI to interact with web pages
+
+2. Key Advantages:
+- Fast & Lightweight: No need for heavy vision models
+- Reliable: Uses element roles and names instead of positions
+- LLM-Friendly: Provides clean, structured data
+- Natural Language Control: Accept plain English commands
+
+3. Main Use Cases:
+
+For Development:
+- Automated test generation
+- Website exploration and test case discovery
+- Interactive debugging assistance
+
+For Automation:
+- Form filling and data entry
+- Multi-step process automation
+- Web scraping and data extraction
+- Dashboard monitoring
+
+4. How It Works:
+- MCP Client: Your interface (e.g., VS Code with GitHub Copilot)
+- MCP Server: The "hands" that execute commands
+- AI Agent: Translates natural language to browser actions
+
+5. Getting Started:
+- Install via VS Code extension
+- Uses @playwright/mcp package
+- Simple JSON configuration
+- Immediate browser control through natural language
+
+Example Usage Scenarios:
+- "Fill out this contact form with our company details"
+- "Check GitHub issues for critical bugs"
+- "Generate tests for shopping cart checkout"
+- "Extract data from multiple web pages"
+
+
+DO EFFECTICE SELECTOR RETRIES
+
+This technology bridges the gap between natural language instructions and automated browser interactions, making web automation more accessible and maintainable.
+-------------------------------------------------------------------------------------------------------------------------------------
+Basic Multiple Contexts Example: -  multiContext.spec.js
+
+The first test shows how to create two separate browser contexts (adminContext and userContext)
+Each context gets its own page object
+The contexts operate independently, simulating different user sessions
+Perfect for testing multi-user scenarios
+Contexts with Different Storage States:
+
+The second test demonstrates how to create contexts with different storage states
+Each context can have its own:
+Cookies
+localStorage
+sessionStorage
+Other browser storage mechanisms
+Key Benefits of Multiple Contexts:
+
+Isolation: Each context is completely isolated from others
+Independent Sessions: Perfect for testing multi-user scenarios
+Different Configurations: Each context can have different:
+Storage states
+Permissions
+Geolocation
+Color schemes
+Viewport sizes
+To run this specific test, you can use:
+
+
+

@@ -1,4 +1,4 @@
-const { test, expect } = require('@playwright/test');
+const { test, expect } = require('@playwright/test')
 
 test('End-to-end shopping flow', async ({ browser }) => {
     // Browser setup with maximized window
@@ -66,4 +66,6 @@ test('End-to-end shopping flow', async ({ browser }) => {
 
     // Close the context
     await context.close();
+
+    
 });

@@ -14,17 +14,24 @@ import { defineConfig, devices } from '@playwright/test';
  */
 export default defineConfig({
   testDir: './tests',
+  testMatch: [
+    '**/*.spec.js',
+    'session 24 e2e shopping flow/Shope2e.spec.js'
+  ],
   timeout: 40 * 1000,
   expect: {
     timeout: 40 * 1000
   },
   use: {
-    browserName: "chromium",
-    headless: false,
-    trace: 'on-first-retry',
     launchOptions: {
       args: ['--start-maximized']
-    }
+    },
+    browserName: "chromium",
+    headless: false,
+    trace: 'on',
+    //trace:'retain-on-failure' #this will make trace.zip only if the test fails
+    screenshot: 'on',
+
   },
   reporter: 'html',
 
@@ -33,8 +40,8 @@ export default defineConfig({
     {
       name: 'chromium',
       use: {
-        ...devices['Desktop Chrome'],
-        viewport: null,
+        // ...devices['Desktop Chrome'],
+        viewport: null
       },
     },
 

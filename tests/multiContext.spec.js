@@ -83,8 +83,7 @@ test('Contexts with different storage states', async ({ browser }) => {
     await page1.goto('https://rahulshettyacademy.com/loginpagePractise/');
     await page2.goto('https://rahulshettyacademy.com/loginpagePractise/');
 
-    page1.pause();
-    page2.pause();
+
 
     // Clean up
     await context1.close();

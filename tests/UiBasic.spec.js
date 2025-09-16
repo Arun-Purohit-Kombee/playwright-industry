@@ -1,15 +1,18 @@
 const { test, expect } = require('@playwright/test')
 
-// test("painter test", async ({ browser, page }) => {
-//   // const context = await browser.newContext()
-//   // const page = await context.newPage()
-//   await page.goto("https://rahulshettyacademy.com/loginpagePractise/")
-// })
-
-test.only("painter test 2", async ({ browser }) => {
+/* test("painter test", async ({ browser, page }) => {
   // const context = await browser.newContext()
   // const page = await context.newPage()
-  const context = await browser.newContext()
+  await page.goto("https://rahulshettyacademy.com/loginpagePractise/")
+}) */
+
+test("painter test 2", async ({ browser }) => {
+  
+  const context = await browser.newContext({
+    headless: false,
+    slowMo: 1000,
+    args: ['--start-maximized']
+  })
   const page = await context.newPage()
   const userName = await page.locator('#username')
   const password = page.locator("[type='password']")
@@ -44,10 +47,9 @@ test.only("painter test 2", async ({ browser }) => {
   await page.locator("#okayBtn").click()
   await dropdown.selectOption("consult")
   await signIn.click()
-  //await page.pause()
+  
 
   //console.log(await cardTitles.nth(0).textContent())
-
 
   console.log(allTitles);
 
@@ -71,10 +73,8 @@ test('Child window handling', async ({ browser }) => {
   const text = await newPage.locator(".red").textContent()
   console.log(text)
   await page.locator("#username").fill("rahulshettyacademy")
-  //page.pause()
+  
   // await documentLink.click()
   // const page2 = await context.waitForEvent('page')
-  // page2.pause()
-
-
+  
 })

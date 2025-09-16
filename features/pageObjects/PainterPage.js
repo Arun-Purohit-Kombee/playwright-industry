@@ -33,7 +33,7 @@ class PainterPage {
         // Select Area
         await this.page.getByRole('combobox', { name: 'Select Area' }).click();
         await this.page.getByRole('option', { name: location.area }).click();
-
+ 
         // Select District
         await this.page.getByRole('combobox', { name: 'Select District' }).click();
         await this.page.getByRole('option', { name: location.district }).click();

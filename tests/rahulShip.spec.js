@@ -2,7 +2,7 @@ const { test, expect } = require('@playwright/test')
 
 test("Shop test 2", async ({ browser }) => {
   const context = await browser.newContext({
-    viewport: null,
+    viewport: { width: 1920, height: 1080 },
     screen: { width: 1920, height: 1080 }
   });
   const page = await context.newPage();

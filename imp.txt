@@ -2,10 +2,13 @@
 
 also you can make the multiple browser context and run them at once
 //command to run test in trace view along - npx playwright test --ui
+//npx playwright test multiContext.spec.js --workers 3
+runt the test in debug mode:npx playwright test tests/e2e_shopping.spec.js --debug
 
 === Playwright Agents Overview (September 12, 2025) ===
 
 === Playwright MCP Accessibility Snapshots (September 12, 2025) ===
+=== codegen - npx p;aywright codegen https://qa-contractorportal.birlaopus.com/
 
 Playwright MCP uses accessibility snapshots as a key feature for web automation. Here's how it works:
 
@@ -114,6 +117,11 @@ Geolocation
 Color schemes
 Viewport sizes
 To run this specific test, you can use:
+
+
+
+---------------------
+to view trace use trace.playwright.dev drag the trace.zip here
 
 
 

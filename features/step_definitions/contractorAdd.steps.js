@@ -83,3 +83,31 @@ Then('the contractor should be listed in the contractors grid', async function()
     const cell = await this.page.getByRole('cell', { name: '9999999998' });
     await expect(cell).toBeVisible();
 });
+
+When('I go to Contractors list', async function () {
+    const contractorPage = new ContractorPage(this.page);
+    await contractorPage.openList();
+});
+
+When('I filter Registration Date from {string} to {string}', async function (start, end) {
+    const contractorPage = new ContractorPage(this.page);
+    await contractorPage.setRegistrationDateRange(start, end);
+    await contractorPage.submitFilters();
+});
+
+Then('I should see all contractor rows with Registration Date within {string} and {string}', async function (start, end) {
+    const contractorPage = new ContractorPage(this.page);
+    const dates = await contractorPage.getRegistrationDatesFromTable();
+
+    const startDate = new Date(start);
+    startDate.setHours(0, 0, 0, 0);
+    const endDate = new Date(end);
+    endDate.setHours(23, 59, 59, 999);
+
+    // Ensure we have at least one result
+    expect(dates.length).toBeGreaterThan(0);
+
+    for (const d of dates) {
+        expect(d >= startDate && d <= endDate).toBeTruthy();
+    }
+});

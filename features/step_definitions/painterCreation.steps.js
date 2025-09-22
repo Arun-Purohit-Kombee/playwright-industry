@@ -3,13 +3,7 @@ const { expect } = require('@playwright/test');
 const LoginPage = require('../pageObjects/LoginPage');
 const PainterPage = require('../pageObjects/PainterPage');
 
-Given('I am logged in to Birla Opus portal', async function() {
-    const loginPage = new LoginPage(this.page);
-    await this.page.goto('https://qa-contractorportal.birlaopus.com/');
-    await loginPage.login('prachi@adityabirla.com', '123456');
-    // Verify we're logged in by checking URL
-    await expect(this.page).toHaveURL(/.*\/dashboard/);
-});
+// onl
 
 Given('I navigate to painters section', async function() {
     await this.page.getByTestId('dashboard_menu_painters').click();

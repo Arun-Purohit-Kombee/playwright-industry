@@ -94,3 +94,46 @@ test.describe('Contractor Management - Create (via MCP verified flow)', () => {
 });
 
 
+test.describe('Painter Deletion', () => {
+  test('should delete a painter', async ({ page }) => {
+    test.setTimeout(120000);
+
+    await page.goto('https://qa-contractorportal.birlaopus.com/');
+    await page.getByTestId('email').fill('prachi@adityabirla.com');
+    await page.getByTestId('login_button').click();
+    await page.getByTestId('verify_otp_code').fill('123456');
+    await page.getByTestId('verifyOtp_button').click();
+    await page.waitForURL(/dashboard/);
+
+    await page.getByTestId('dashboard_menu_contractors').click();
+    await page.waitForURL(/\/contractors$/);
+
+    await page.getByRole('combobox').nth(1).click();
+    await page.getByRole('option', { name: 'Pending' }).click();
+    await page.getByTestId('submit_button').click();
+
+    await page.waitForTimeout(3000);
+    const firstRow = page.locator('tbody tr').first();
+    const opusId = (await firstRow.locator('td').nth(1).textContent())?.trim();
+    console.log(`Opus ID: ${opusId}`);
+
+    if (!opusId) {
+      throw new Error('Opus ID not found');
+    }
+
+    await firstRow.getByRole('button', { name: '' }).click();
+
+    await page.locator('div.modal-content:has-text("Are you sure you want to delete this user?")').getByTestId('remark').fill('test');
+    await page.getByTestId('yes_button').click();
+
+    await page.waitForURL(/\/delete-users$/);
+
+    await page.getByTestId('table_column_filter_opus_pc_id').fill(opusId);
+    await page.waitForTimeout(2000);
+
+    const deletedRow = page.locator(`tbody tr:has-text("${opusId}")`);
+    await expect(deletedRow).toBeVisible();
+  });
+});
+
+

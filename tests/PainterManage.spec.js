@@ -1,0 +1,94 @@
+// @ts-check
+import { test, expect } from '@playwright/test';
+
+test.describe('Painter Management - Create (happy path)', () => {
+  test('should create a new painter profile', async ({ page, context }) => {
+    test.setTimeout(120000);
+    
+    const start = Date.now();
+
+    
+    await page.goto('https://qa-contractorportal.birlaopus.com/');
+    await page.getByTestId('email').fill('prachi@adityabirla.com');
+    await page.getByTestId('login_button').click();
+    await page.getByTestId('verify_otp_code').fill('123456');
+    await page.getByTestId('verifyOtp_button').click();
+    await page.waitForURL(/dashboard/);
+
+    
+    await page.getByTestId('dashboard_menu_painters').click();
+    await page.waitForURL(/\/painters$/);
+
+    
+    await page.getByTestId('add_new').click();
+    await page.waitForURL(/\/painters\/create$/);
+
+    
+    const unique = Math.floor(Math.random() * 1_000_000);
+    await page.getByTestId('first_name').fill('PrachiQA');
+    await page.getByTestId('last_name').fill('Automation');
+    await page.getByTestId('mobile_no').fill(`99911${(10000 + unique).toString().slice(0,5)}`);
+    await page.getByTestId('email').fill(`prachi.qa.auto+${unique}@example.com`);
+    await page.getByTestId('type_of_user_painter').click();
+
+    
+    await page.getByTestId('contractor_mobile_no').fill('9876543210');
+    await page.getByTestId('contractor_name').fill('ABG');
+    await page.getByTestId('contractor_last_name').fill('Contractor');
+
+    
+    async function pickOption(comboboxName, optionName) {
+      const combo = page.getByRole('combobox', { name: comboboxName });
+      await combo.click();
+      
+      const search = page.getByRole('searchbox', { name: 'Search' });
+      if (await search.isVisible().catch(() => false)) {
+        await search.fill(optionName);
+      }
+      const option = page.getByRole('option', { name: optionName }).first();
+      await option.waitFor({ state: 'visible', timeout: 10000 });
+      await option.click();
+    }
+
+    await pickOption('Select State', 'Delhi');
+    await page.waitForTimeout(3000);
+    await pickOption('Select Area', 'Delhi North');
+    await page.waitForTimeout(3000);
+    await pickOption('Select District', 'North East Delhi');
+    await page.waitForTimeout(3000);
+    await pickOption('Select Pincode', '110090');
+    await page.waitForTimeout(3000);
+    
+    await page.getByRole('combobox', { name: 'Select Territory' }).click();
+    
+    const anyOption = page.getByRole('option');
+    await anyOption.first().waitFor({ state: 'visible', timeout: 10000 }).catch(() => null);
+    const territoryKnown = page.getByRole('option', { name: /Karawal Nagar/i }).first();
+    if (await territoryKnown.isVisible().catch(() => false)) {
+      await territoryKnown.click();
+    } else {
+      await anyOption.first().click();
+    }
+
+    
+    await page.getByTestId('submit_button').click();
+    await page.waitForTimeout(3000);
+
+    
+    const confirmButton = page.getByTestId('confirm_button');
+    if (await confirmButton.isVisible().catch(() => false)) {
+      await confirmButton.click();
+    }
+
+
+    const toast = page.getByText('The profile details have been created successfully', { exact: false });
+    await toast.waitFor({ state: 'visible', timeout: 15000 });
+    await expect(toast).toBeVisible();
+
+    
+    const elapsedMs = Date.now() - start;
+    console.log(`Painter create elapsedMs=${elapsedMs}`);
+  });
+});
+
+

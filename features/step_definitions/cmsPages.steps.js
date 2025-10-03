@@ -12,7 +12,7 @@ When('A user is logged into the portal', async function () {
     await page.goto(BASE_URL);
     const loginPage = new LoginPage(page);
     await loginPage.login(QA_EMAIL, QA_OTP);
-    await page.waitForURL(/\/dashboard(?:\/?$)/);
+    await expect(page).toHaveURL(/\/dashboard(?:\/?$)/, { timeout: 60000 });
 });
 
 When('A user lands on the CMS management page', async function () {

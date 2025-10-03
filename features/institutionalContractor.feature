@@ -1,3 +1,10 @@
+@institutional
+Feature: Institutional Contractor Creation in Birla Opus Portal
+
+  Scenario: Create a new institutional contractor with valid details
+    Given I am logged in as institutional contractor admin
+    When I create a new institutional contractor profile with valid details
+    Then I should be redirected to Institutional Contractors list page
 # Feature: Institutional Contractor Login
 
 #   # @institutional @login

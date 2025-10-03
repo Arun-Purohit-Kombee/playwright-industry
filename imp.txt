@@ -214,3 +214,6 @@ https://prnt.sc/0rgQYfVVzDlM
 
 drag and drop your test
 https://trace.playwright.dev/
+
+
+npx cucumber-js features/cmsPages.feature

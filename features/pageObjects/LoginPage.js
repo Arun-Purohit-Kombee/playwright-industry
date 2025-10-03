@@ -8,10 +8,15 @@ class LoginPage {
     }
 
     async login(email, otp) {
+        await this.emailInput.waitFor({ state: 'visible', timeout: 15000 });
         await this.emailInput.fill(email);
         await this.loginButton.click();
+        await this.otpInput.waitFor({ state: 'visible', timeout: 30000 });
         await this.otpInput.fill(otp);
-        await this.verifyOtpButton.click();
+        await Promise.all([
+            this.verifyOtpButton.click(),
+            this.page.waitForURL(/\/dashboard(?:\/?$)/, { timeout:60000 })
+        ]);
     }
 }
 

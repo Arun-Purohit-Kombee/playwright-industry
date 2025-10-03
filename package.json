@@ -3,14 +3,26 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "commonjs",
+  
   "scripts": {
     "test:cucumber": "cucumber-js",
-    "test:cucumber:tags": "cucumber-js --tags"
+    "test:cucumber:tags": "cucumber-js --tags",
+    "test:playwright": "npx playwright test",
+    "test:playwright:ui": "npx playwright test --ui",
+    "test:playwright:debug": "npx playwright test --debug",
+    "test:playwright:trace": "npx playwright test --trace=on",
+    "test:playwright:report": "npx playwright show-report",
+    "test:playwright:codegen": "npx playwright codegen",
+    "test:playwright:ui-workers2": "npx playwright test --ui --workers=2",
+    "test:playwright:install": "npx playwright install",
+    "test:playwright:install:chromium": "npx playwright install chromium",
+    "test:playwright:install:firefox": "npx playwright install firefox",
+    "test:playwright:install:webkit": "npx playwright install webkit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
   "devDependencies": {
     "@babel/core": "^7.22.10",
     "@babel/preset-env": "^7.22.10",

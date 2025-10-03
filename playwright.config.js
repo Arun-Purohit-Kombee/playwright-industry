@@ -1,59 +1,60 @@
 // @ts-check
-import { defineConfig, devices } from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test'
 
-/**
- * Read environment variables from file.
- * https://github.com/motdotla/dotenv
- */
-// import dotenv from 'dotenv';
-// import path from 'path';
-// dotenv.config({ path: path.resolve(__dirname, '.env') });
-
-/**
- * @see https://playwright.dev/docs/test-configuration
- */
 export default defineConfig({
-  testDir: './tests',
+  testDir: './tests/opusFlows',
+
+  // Give failing tests 3 retry attempts
+  //retries: 3,
+
   testMatch: [
     '**/*.spec.js',
     'session 24 e2e shopping flow/Shope2e.spec.js'
   ],
-  timeout: 40 * 1000,
+  timeout: 100 * 1000,
+  workers: 2,
   expect: {
     timeout: 40 * 1000
   },
   use: {
     launchOptions: {
-      args: ['--start-maximized']
+      // args: ['--start-maximized'],
+      channel: 'msedge',
     },
-    browserName: "chromium",
+    viewport: { width: 1920, height: 1080 },  
+    screen: { width: 1920, height: 1080 },
+    browserName: 'chromium',
     headless: false,
     trace: 'on',
-    //trace:'retain-on-failure' #this will make trace.zip only if the test fails
     screenshot: 'on',
-
+    video: 'on'
   },
   reporter: 'html',
-
-  /* Configure projects for major browsers */
   projects: [
+    // {
+    //   name: 'firefox',
+    //   use: {
+    //     ...devices['Desktop Firefox'],
+    //     viewport: { width: 1920, height: 1080 }
+    //   },
+    // },
+
     {
-      name: 'chromium',
+      name: 'chrome',
       use: {
-        // ...devices['Desktop Chrome'],
-        viewport: null
+        ...devices['Desktop Chrome'],
+        channel: 'chrome'
       },
     },
-
     {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-    },
-
-    {
-      name: 'webkit',
-      use: { ...devices['Desktop Safari'] },
+      name: 'msEdge',
+      use: {
+        ...devices['Desktop Edge'],
+        channel: 'msedge'
+      },
     },
   ],
 });
+
+
 

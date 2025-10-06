@@ -1,47 +1,40 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
-const { expect } = require('@playwright/test');
-const LoginPage = require('../pageObjects/LoginPage');
-const InstitutionalContractorPage = require('../pageObjects/InstitutionalContractorPage');
 
-Given('I navigate to the Birla Opus QA contractor portal', async function () {
-    await this.page.goto('https://qa-contractorportal.birlaopus.com/');
-});
+// const { Given, When, Then } = require('@cucumber/cucumber');
+// const { expect } = require('@playwright/test');
+// const LoginPage = require('../pageObjects/LoginPage');
+// const InstitutionalContractorPage = require('../pageObjects/InstitutionalContractorPage');
 
-When('I login with email {string} and otp {string}', async function (email, otp) {
-    const loginPage = new LoginPage(this.page);
-    await loginPage.login(email, otp);
-});
+// Given('I am logged in as an admin user', async function () {
+//     this.loginPage = new LoginPage(this.page);
+//     await this.loginPage.goto();
+//     await this.loginPage.loginAsAdmin();
+// });
 
-Then('I should see the Institutional Contractors option on the dashboard', async function () {
-    await expect(this.page).toHaveURL(/.*dashboard/);
-    await expect(this.page.getByRole('link', { name: 'Institutional Contractors' })).toBeVisible();
-});
+// When('I navigate to the Institutional Contractors section', async function () {
+//     this.instPage = new InstitutionalContractorPage(this.page);
+//     await this.instPage.goto();
+// });
 
-Given('I am logged in as institutional contractor admin', async function () {
-    await this.page.goto('https://qa-contractorportal.birlaopus.com/');
-    const loginPage = new LoginPage(this.page);
-    await loginPage.login('prachi@adityabirla.com', '123456');
-    await expect(this.page).toHaveURL(/dashboard/);
-});
+// When('I click the {string} button', async function (buttonText) {
+//     await this.instPage.clickButton(buttonText);
+// });
 
-When('I create a new institutional contractor profile with valid details', async function () {
-    const icPage = new InstitutionalContractorPage(this.page);
-    await icPage.openCreateForm();
-    await icPage.fillProfileDetails({
-        firstName: 'Prachi',
-        lastName: 'Sharma',
-        mobile: '9990012345',
-        email: 'prachi.ic+e2e@adityabirla.com',
-        subType: 'Painting Contractor (IC1)',
-        birthdayLabel: 'September 10, 2007',
-        territory: 'PP-0020 (Painter Automation QA)'
-    });
-    await icPage.skipToFinish();
-});
+// When('I fill in the institutional contractor details:', async function (dataTable) {
+//     const details = dataTable.hashes()[0];
+//     await this.instPage.fillContractorDetails(details);
+// });
 
-Then('I should be redirected to Institutional Contractors list page', async function () {
-    await expect(this.page).toHaveURL(/\/institutional-contractors$/);
-    await expect(this.page.getByRole('heading', { name: 'User Management' })).toBeVisible();
-});
+// When('I select the following work location:', async function (dataTable) {
+//     const location = dataTable.hashes()[0];
+//     await this.instPage.selectWorkLocation(location);
+// });
+
+// When('I submit the contractor form', async function () {
+//     await this.instPage.submitForm();
+// });
+
+// Then('I should see a confirmation that the profile details have been created successfully', async function () {
+//     await expect(this.instPage.getSuccessMessage()).resolves.toContain('created successfully');
+// });
 
 

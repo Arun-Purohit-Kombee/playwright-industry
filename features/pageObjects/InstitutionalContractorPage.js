@@ -1,52 +1,104 @@
-class InstitutionalContractorPage {
-    constructor(page) {
-        this.page = page;
-        this.menuInstitutional = page.getByTestId('dashboard_menu_institutional_contractors');
-        this.addNewButton = page.getByTestId('add_new');
-        this.firstName = page.getByTestId('first_name');
-        this.lastName = page.getByTestId('last_name');
-        this.mobileNo = page.getByTestId('mobile_no');
-        this.email = page.getByTestId('email');
-        this.birthday = page.getByTestId('birthday');
-        this.typeInstitutional = page.getByTestId('type_of_user_institutional_contractor');
-        this.subTypeCombo = page.getByRole('combobox').nth(0);
-        this.subTypeSearch = page.getByRole('searchbox').first();
-        this.anniversary = page.getByTestId('anniversary');
-        this.territoryCombo = page.getByRole('combobox', { name: 'Select Territory' });
-        this.submitButton = page.getByTestId('submit_button');
-        this.confirmButton = page.getByTestId('confirm_button');
-        this.skipNext = page.getByTestId('skip_next');
-        this.finish = page.getByTestId('skip_continue');
-    }
 
-    async openCreateForm() {
-        await this.menuInstitutional.click();
-        await this.addNewButton.click();
-    }
+// class InstitutionalContractorPage {
+//     constructor(page) {
+//         this.page = page;
+//     }
 
-    async fillProfileDetails(profile) {
-        await this.firstName.fill(profile.firstName);
-        await this.lastName.fill(profile.lastName);
-        await this.mobileNo.fill(profile.mobile);
-        await this.email.fill(profile.email);
-        await this.typeInstitutional.click();
-        await this.subTypeCombo.click();
-        await this.page.getByRole('option', { name: profile.subType }).click();
-        await this.birthday.click();
-        await this.page.getByLabel(profile.birthdayLabel).click();
-        await this.territoryCombo.click();
-        await this.page.getByRole('option', { name: profile.territory }).click();
-        await this.submitButton.click();
-        await this.confirmButton.click();
-    }
+//     async goto() {
+//         // Assumes already logged in and on dashboard
+//         await this.page.getByRole('link', { name: 'Institutional Contractors' }).click();
+//         await this.page.waitForURL(/institutional-contractors/);
+//     }
 
-    async skipToFinish() {
-        await this.skipNext.click();
-        await this.skipNext.click();
-        await this.finish.click();
-    }
-}
+//     async clickButton(buttonText) {
+//         const button = this.page.getByTestId('add_new');
+//         await button.waitFor({ state: 'visible', timeout: 15000 });
+//         await button.click();
+//     }
 
-module.exports = InstitutionalContractorPage;
+//     async fillContractorDetails(details) {
+//         // Wait for the modal/dialog to be visible
+//         await this.page.locator('#profileModal').waitFor({ state: 'visible', timeout: 10000 });
+
+//         // Try getByLabel, fallback to getByPlaceholder or getByTestId if needed
+//         try {
+//             await this.page.getByLabel('First Name').fill(details['First Name']);
+//         } catch (e) {
+//             try {
+//                 await this.page.getByPlaceholder('First Name').fill(details['First Name']);
+//             } catch (e2) {
+//                 await this.page.getByTestId('first_name').fill(details['First Name']);
+//             }
+//         }
+//         try {
+//             await this.page.getByLabel('Last Name').fill(details['Last Name']);
+//         } catch (e) {
+//             try {
+//                 await this.page.getByPlaceholder('Last Name').fill(details['Last Name']);
+//             } catch (e2) {
+//                 await this.page.getByTestId('last_name').fill(details['Last Name']);
+//             }
+//         }
+//         try {
+//             await this.page.getByLabel('Mobile No *').fill(details['Mobile No']);
+//         } catch (e) {
+//             try {
+//                 await this.page.getByPlaceholder('Mobile No').fill(details['Mobile No']);
+//             } catch (e2) {
+//                 await this.page.getByTestId('mobile_no').fill(details['Mobile No']);
+//             }
+//         }
+//         try {
+//             await this.page.getByLabel('Email').fill(details['Email']);
+//         } catch (e) {
+//             try {
+//                 await this.page.getByPlaceholder('Email').fill(details['Email']);
+//             } catch (e2) {
+//                 await this.page.getByTestId('email').fill(details['Email']);
+//             }
+//         }
+//         // Select Institutional Contractor type if not already selected
+//         const instRadio = this.page.getByRole('radio', { name: 'Institutional Contractor' });
+//         if (!(await instRadio.isChecked())) {
+//             await instRadio.check();
+//         }
+//         // Sub-Type: select first available (Painting Contractor (IC1))
+//         await this.page.getByRole('combobox', { name: /Sub-Type/i }).click();
+//         await this.page.getByRole('option', { name: /Painting Contractor \(IC1\)/ }).click();
+//     }
+
+//     async selectWorkLocation(location) {
+//         // State
+//         await this.page.getByRole('combobox', { name: /State/i }).click();
+//         await this.page.getByRole('option', { name: location['State'] }).click();
+//         // Area
+//         await this.page.getByRole('combobox', { name: /Area/i }).click();
+//         await this.page.getByRole('option', { name: location['Area'] }).click();
+//         // District
+//         await this.page.getByRole('combobox', { name: /District/i }).click();
+//         await this.page.getByRole('option', { name: location['District'] }).click();
+//         // Pincode
+//         await this.page.getByRole('combobox', { name: /Pincode/i }).click();
+//         await this.page.getByRole('option', { name: location['Pincode'] }).click();
+//         // Territory
+//         await this.page.getByRole('combobox', { name: /Territory/i }).click();
+//         await this.page.getByRole('option', { name: location['Territory'] }).click();
+//     }
+
+//     async submitForm() {
+//         await this.page.getByTestId('submit_button').click();
+//         // Confirm dialog
+//         await this.page.getByTestId('confirm_button').click();
+//     }
+
+//     async getSuccessMessage() {
+//         // Wait for and return the success message
+//         const msg = await this.page.locator('text=created successfully').first();
+//         await msg.waitFor({ state: 'visible', timeout: 5000 });
+//         return msg.textContent();
+//     }
+// }
+
+// module.exports = InstitutionalContractorPage;
 
 

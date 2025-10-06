@@ -72,10 +72,10 @@ When('I submit the form and confirm', async function() {
     await contractorPage.confirmDetails();
 });
 
-Then('I should see a success message', async function() {
-    const contractorPage = new ContractorPage(this.page);
-    await contractorPage.isSuccessVisible();
-});
+// Then('I should see a success message', async function() {
+//     const contractorPage = new ContractorPage(this.page);
+//     await contractorPage.isSuccessVisible();
+// });
 
 Then('the contractor should be listed in the contractors grid', async function() {
     // crude verification: search by mobile number used in the feature

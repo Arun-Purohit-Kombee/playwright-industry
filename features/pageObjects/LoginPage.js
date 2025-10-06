@@ -1,3 +1,4 @@
+
 class LoginPage {
     constructor(page) {
         this.page = page;
@@ -5,6 +6,10 @@ class LoginPage {
         this.loginButton = page.getByTestId('login_button');
         this.otpInput = page.getByTestId('verify_otp_code');
         this.verifyOtpButton = page.getByTestId('verifyOtp_button');
+    }
+
+    async goto() {
+        await this.page.goto('https://qa-contractorportal.birlaopus.com/');
     }
 
     async login(email, otp) {
@@ -17,6 +22,11 @@ class LoginPage {
             this.verifyOtpButton.click(),
             this.page.waitForURL(/\/dashboard(?:\/?$)/, { timeout:60000 })
         ]);
+    }
+
+    async loginAsAdmin() {
+        // Use a default admin user and static OTP as per test convention
+        await this.login('prachi@adityabirla.com', '123456');
     }
 }
 

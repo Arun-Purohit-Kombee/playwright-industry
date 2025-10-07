@@ -1,8 +1,11 @@
-const { Before, After, BeforeAll, AfterAll, setDefaultTimeout } = require('@cucumber/cucumber');
+const { createBdd } = require('playwright-bdd');
+const { Before, After, BeforeAll, AfterAll } = createBdd();
 const { chromium } = require('@playwright/test');
 
-setDefaultTimeout(120 * 1000);
-BeforeAll(async function () {
+// Configure timeout through playwright.config.js instead
+// Previous cucumber timeout was 120s
+
+BeforeAll(async () => {
     global.browser = await chromium.launch({
         headless: false,
         slowMo: 1000,
@@ -10,18 +13,16 @@ BeforeAll(async function () {
     });
 });
 
-AfterAll(async function () {
+AfterAll(async () => {
     await global.browser.close();
 });
 
-Before(async function () {
-    this.context = await global.browser.newContext({
-        viewport: null,
-    });
-    this.page = await this.context.newPage();
+Before(async ({ context }) => {
+    // Context is automatically provided by playwright-bdd
+    await context.setViewportSize({ width: 0, height: 0 }); // Maximized
 });
 
-After(async function () {
-    await this.page.close();
-    await this.context.close();
+After(async ({ page, context }) => {
+    await page?.close();
+    await context?.close();
 });

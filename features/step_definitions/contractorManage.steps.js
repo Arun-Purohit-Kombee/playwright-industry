@@ -1,32 +1,33 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
+const { createBdd } = require('playwright-bdd');
+const { Given, When, Then } = createBdd();
 const { expect } = require('@playwright/test');
 const LoginPage = require('../pageObjects/LoginPage');
 const ContractorPage = require('../pageObjects/ContractorPage');
 
-Given('I am logged in to Birla Opus portal', async function() {
-    const loginPage = new LoginPage(this.page);
-    await this.page.goto('https://qa-contractorportal.birlaopus.com/');
+Given('I am logged in to Birla Opus portal', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await page.goto('https://qa-contractorportal.birlaopus.com/');
     await loginPage.login('prachi@adityabirla.com', '123456');
-    await expect(this.page).toHaveURL(/.*\/dashboard/);
+    await expect(page).toHaveURL(/.*\/dashboard/);
 });
 
-When('I navigate to contractors section', async function() {
-    const contractorPage = new ContractorPage(this.page);
+When('I navigate to contractors section', async ({ page }) => {
+    const contractorPage = new ContractorPage(page);
     await contractorPage.goToContractors();
 });
 
-When('I click on create new contractor', async function() {
-    const contractorPage = new ContractorPage(this.page);
+When('I click on create new contractor', async ({ page }) => {
+    const contractorPage = new ContractorPage(page);
     await contractorPage.openCreateForm();
 });
 
-When('I choose contractor type {string}', async function(type) {
-    const contractorPage = new ContractorPage(this.page);
+When('I choose contractor type {string}', async ({ page }, type) => {
+    const contractorPage = new ContractorPage(page);
     await contractorPage.chooseContractorType(type);
 });
 
-When('I fill in the contractor details:', async function(dataTable) {
-    const contractorPage = new ContractorPage(this.page);
+When('I fill in the contractor details:', async ({ page }, dataTable) => {
+    const contractorPage = new ContractorPage(page);
     const details = {};
     dataTable.rows().forEach(([field, value]) => {
         switch(field.trim()) {
@@ -39,8 +40,8 @@ When('I fill in the contractor details:', async function(dataTable) {
     await contractorPage.fillBasicDetails(details);
 });
 
-When('I fill in institutional details:', async function(dataTable) {
-    const contractorPage = new ContractorPage(this.page);
+When('I fill in institutional details:', async ({ page }, dataTable) => {
+    const contractorPage = new ContractorPage(page);
     const inst = {};
     dataTable.rows().forEach(([field, value]) => {
         switch(field.trim()) {
@@ -51,8 +52,8 @@ When('I fill in institutional details:', async function(dataTable) {
     await contractorPage.fillInstitutionalDetails(inst);
 });
 
-When('I select work location:', async function(dataTable) {
-    const contractorPage = new ContractorPage(this.page);
+When('I select work location:', async ({ page }, dataTable) => {
+    const contractorPage = new ContractorPage(page);
     const location = {};
     dataTable.rows().forEach(([field, value]) => {
         switch(field.trim()) {
@@ -66,8 +67,8 @@ When('I select work location:', async function(dataTable) {
     await contractorPage.selectLocation(location);
 });
 
-When('I submit the form and confirm', async function() {
-    const contractorPage = new ContractorPage(this.page);
+When('I submit the form and confirm', async ({ page }) => {
+    const contractorPage = new ContractorPage(page);
     await contractorPage.submitForm();
     await contractorPage.confirmDetails();
 });
@@ -77,26 +78,26 @@ When('I submit the form and confirm', async function() {
 //     await contractorPage.isSuccessVisible();
 // });
 
-Then('the contractor should be listed in the contractors grid', async function() {
+Then('the contractor should be listed in the contractors grid', async ({ page }) => {
     // crude verification: search by mobile number used in the feature
-    await this.page.waitForSelector('table');
-    const cell = await this.page.getByRole('cell', { name: '9999999998' });
+    await page.waitForSelector('table');
+    const cell = await page.getByRole('cell', { name: '9999999998' });
     await expect(cell).toBeVisible();
 });
 
-When('I go to Contractors list', async function () {
-    const contractorPage = new ContractorPage(this.page);
+When('I go to Contractors list', async ({ page }) => {
+    const contractorPage = new ContractorPage(page);
     await contractorPage.openList();
 });
 
-When('I filter Registration Date from {string} to {string}', async function (start, end) {
-    const contractorPage = new ContractorPage(this.page);
+When('I filter Registration Date from {string} to {string}', async ({ page }, start, end) => {
+    const contractorPage = new ContractorPage(page);
     await contractorPage.setRegistrationDateRange(start, end);
     await contractorPage.submitFilters();
 });
 
-Then('I should see all contractor rows with Registration Date within {string} and {string}', async function (start, end) {
-    const contractorPage = new ContractorPage(this.page);
+Then('I should see all contractor rows with Registration Date within {string} and {string}', async ({ page }, start, end) => {
+    const contractorPage = new ContractorPage(page);
     const dates = await contractorPage.getRegistrationDatesFromTable();
 
     const startDate = new Date(start);

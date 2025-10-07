@@ -1,23 +1,23 @@
-const { Given, When, Then } = require('@cucumber/cucumber');
+const { createBdd } = require('playwright-bdd');
+const { Given, When, Then } = createBdd();
 const { expect } = require('@playwright/test');
 const LoginPage = require('../pageObjects/LoginPage');
 const PainterPage = require('../pageObjects/PainterPage');
 
-// onl
 
-Given('I navigate to painters section', async function() {
-    await this.page.getByTestId('dashboard_menu_painters').click();
-    await expect(this.page).toHaveURL(/.*\/painters/);
+Given('I navigate to painters section', async ({ page }) => {
+    await page.getByTestId('dashboard_menu_painters').click();
+    await expect(page).toHaveURL(/.*\/painters/);
 });
 
-When('I click on create new painter button', async function() {
-    const painterPage = new PainterPage(this.page);
+When('I click on create new painter button', async ({ page }) => {
+    const painterPage = new PainterPage(page);
     await painterPage.createButton.click();
-    await expect(this.page).toHaveURL(/.*\/painters\/create/);
+    await expect(page).toHaveURL(/.*\/painters\/create/);
 });
 
-When('I fill in the painter details:', async function(dataTable) {
-    const painterPage = new PainterPage(this.page);
+When('I fill in the painter details:', async ({ page }, dataTable) => {
+    const painterPage = new PainterPage(page);
     const details = {};
     dataTable.rows().forEach(([field, value]) => {
         switch(field) {
@@ -47,8 +47,8 @@ When('I fill in the painter details:', async function(dataTable) {
     await painterPage.fillBasicDetails(details);
 });
 
-When('I select work location details:', async function(dataTable) {
-    const painterPage = new PainterPage(this.page);
+When('I select work location details:', async ({ page }, dataTable) => {
+    const painterPage = new PainterPage(page);
     const location = {};
     dataTable.rows().forEach(([field, value]) => {
         switch(field) {
@@ -72,22 +72,22 @@ When('I select work location details:', async function(dataTable) {
     await painterPage.selectLocation(location);
 });
 
-When('I click the submit button', async function() {
-    const painterPage = new PainterPage(this.page);
+When('I click the submit button', async ({ page }) => {
+    const painterPage = new PainterPage(page);
     await painterPage.submitForm();
 });
 
-When('I confirm the painter details', async function() {
-    const painterPage = new PainterPage(this.page);
+When('I confirm the painter details', async ({ page }) => {
+    const painterPage = new PainterPage(page);
     await painterPage.confirmDetails();
 });
 
-Then('I should see a success message', async function() {
-    await expect(this.page.getByText('The profile details have been created successfully')).toBeVisible();
+Then('I should see a success message', async ({ page }) => {
+    await expect(page.getByText('The profile details have been created successfully')).toBeVisible();
 });
 
 // Then('the new painter should be listed in the painters grid', async function() {
-//     await this.page.waitForSelector('table');
-//     const mobileCell = await this.page.getByRole('cell', { name: '9999958455' });
+//     await page.waitForSelector('table');
+//     const mobileCell = await page.getByRole('cell', { name: '9999958455' });
 //     await expect(mobileCell).toBeVisible();
 // });

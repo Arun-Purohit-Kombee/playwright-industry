@@ -1,4 +1,4 @@
-// Generated from: features\institutionalContractor.mcp.feature
+// Generated from: features\institutional-contractor-manage.feature
 import { test } from "playwright-bdd";
 
 test.describe('Institutional Contractor - MCP verified flow', () => {
@@ -21,8 +21,12 @@ test.describe('Institutional Contractor - MCP verified flow', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\institutionalContractor.mcp.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\institutional-contractor-manage.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
+  page: async ({ page, $prompt }, use) => {
+    $prompt.setPage(page);
+    await use(page);
+  },
 });
 
 const bddFileData = [ // bdd-data-start

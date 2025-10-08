@@ -2,7 +2,7 @@ const { createBdd } = require('playwright-bdd');
 const { Given, When, Then } = createBdd();
 const { expect } = require('@playwright/test');
 const LoginPage = require('../pageObjects/LoginPage');
-const CmsManagementPage = require('../pageObjects/CmsManagementPage');
+const CmsPage = require('../pageObjects/CmsPage');
 
 const BASE_URL = process.env.OPUS_BASE_URL || 'https://qa-contractorportal.birlaopus.com';
 const QA_EMAIL = process.env.OPUS_EMAIL || 'prachi@adityabirla.com';
@@ -16,12 +16,12 @@ When('A user is logged into the portal', async ({ page }) => {
 });
 
 When('A user lands on the CMS management page', async ({ page }) => {
-    const cms = new CmsManagementPage(page);
+    const cms = new CmsPage(page);
     await cms.navigateToCmsPages();
 });
 
 When('A user clicks on the view icon of the {string} on the cms page', async ({ page }, label) => {
-    const cms = new CmsManagementPage(page);
+    const cms = new CmsPage(page);
     await cms.clickView(label);
 });
 
@@ -30,12 +30,12 @@ Then('A user should be navigated to the appropriate {string} {string} on the cms
 });
 
 When('A user clicks on the edit icon of the {string} on the cms page', async ({ page }, label) => {
-    const cms = new CmsManagementPage(page);
+    const cms = new CmsPage(page);
     await cms.clickEdit(label);
 });
 
 When('A user update data of particular {string} cms page and clicks on submit button', async ({ page }, label) => {
-    const cms = new CmsManagementPage(page);
+    const cms = new CmsPage(page);
     const timestamp = `Automated update for ${label} ${new Date().toISOString()}`;
     await cms.appendToEditor(timestamp);
     await cms.submitEdit();

@@ -1,104 +1,86 @@
+class InstitutionalContractorMCPPage {
+    constructor(page) {
+        this.page = page;
+    }
 
-// class InstitutionalContractorPage {
-//     constructor(page) {
-//         this.page = page;
-//     }
+    async gotoFromDashboard() {
+        // Click using the exact data-testid provided
+        const menu = this.page.getByTestId('dashboard_menu_institutional_contractors');
+        await menu.waitFor({ state: 'visible', timeout: 15000 });
+        await menu.click();
+        await this.page.waitForURL(/institutional[-_ ]?contractors/, { timeout: 15000 });
+    }
 
-//     async goto() {
-//         // Assumes already logged in and on dashboard
-//         await this.page.getByRole('link', { name: 'Institutional Contractors' }).click();
-//         await this.page.waitForURL(/institutional-contractors/);
-//     }
+    async clickAddNew() {
+        const btn = this.page.getByTestId('add_new');
+        await btn.waitFor({ state: 'visible', timeout: 10000 });
+        await btn.click();
+    }
 
-//     async clickButton(buttonText) {
-//         const button = this.page.getByTestId('add_new');
-//         await button.waitFor({ state: 'visible', timeout: 15000 });
-//         await button.click();
-//     }
+    async fillPersonalDetails({ firstName, lastName, mobile, email }) {
+        await this.page.getByTestId('first_name').waitFor({ state: 'visible', timeout: 8000 });
+        await this.page.getByTestId('first_name').fill(firstName);
+        await this.page.getByTestId('last_name').fill(lastName);
+        await this.page.getByTestId('mobile_no').fill(mobile);
+        await this.page.getByTestId('email').fill(email);
+    }
 
-//     async fillContractorDetails(details) {
-//         // Wait for the modal/dialog to be visible
-//         await this.page.locator('#profileModal').waitFor({ state: 'visible', timeout: 10000 });
+    async chooseInstitutionalType() {
+        const radio = this.page.getByTestId('type_of_user_institutional_contractor');
+        await radio.waitFor({ state: 'visible', timeout: 5000 });
+        if (!(await radio.isChecked())) await radio.check();
+    }
 
-//         // Try getByLabel, fallback to getByPlaceholder or getByTestId if needed
-//         try {
-//             await this.page.getByLabel('First Name').fill(details['First Name']);
-//         } catch (e) {
-//             try {
-//                 await this.page.getByPlaceholder('First Name').fill(details['First Name']);
-//             } catch (e2) {
-//                 await this.page.getByTestId('first_name').fill(details['First Name']);
-//             }
-//         }
-//         try {
-//             await this.page.getByLabel('Last Name').fill(details['Last Name']);
-//         } catch (e) {
-//             try {
-//                 await this.page.getByPlaceholder('Last Name').fill(details['Last Name']);
-//             } catch (e2) {
-//                 await this.page.getByTestId('last_name').fill(details['Last Name']);
-//             }
-//         }
-//         try {
-//             await this.page.getByLabel('Mobile No *').fill(details['Mobile No']);
-//         } catch (e) {
-//             try {
-//                 await this.page.getByPlaceholder('Mobile No').fill(details['Mobile No']);
-//             } catch (e2) {
-//                 await this.page.getByTestId('mobile_no').fill(details['Mobile No']);
-//             }
-//         }
-//         try {
-//             await this.page.getByLabel('Email').fill(details['Email']);
-//         } catch (e) {
-//             try {
-//                 await this.page.getByPlaceholder('Email').fill(details['Email']);
-//             } catch (e2) {
-//                 await this.page.getByTestId('email').fill(details['Email']);
-//             }
-//         }
-//         // Select Institutional Contractor type if not already selected
-//         const instRadio = this.page.getByRole('radio', { name: 'Institutional Contractor' });
-//         if (!(await instRadio.isChecked())) {
-//             await instRadio.check();
-//         }
-//         // Sub-Type: select first available (Painting Contractor (IC1))
-//         await this.page.getByRole('combobox', { name: /Sub-Type/i }).click();
-//         await this.page.getByRole('option', { name: /Painting Contractor \(IC1\)/ }).click();
-//     }
+    async selectDropdowns({ State, Area, District, Pincode, Territory }) {
+        // select by visible option text
+        await this._selectComboboxOptionByLabel('State', State);
+        await this._selectComboboxOptionByLabel('Area', Area);
+        await this._selectComboboxOptionByLabel('District', District);
+        await this._selectComboboxOptionByLabel('Pincode', Pincode);
+        await this._selectComboboxOptionByLabel('Territory', Territory);
+    }
 
-//     async selectWorkLocation(location) {
-//         // State
-//         await this.page.getByRole('combobox', { name: /State/i }).click();
-//         await this.page.getByRole('option', { name: location['State'] }).click();
-//         // Area
-//         await this.page.getByRole('combobox', { name: /Area/i }).click();
-//         await this.page.getByRole('option', { name: location['Area'] }).click();
-//         // District
-//         await this.page.getByRole('combobox', { name: /District/i }).click();
-//         await this.page.getByRole('option', { name: location['District'] }).click();
-//         // Pincode
-//         await this.page.getByRole('combobox', { name: /Pincode/i }).click();
-//         await this.page.getByRole('option', { name: location['Pincode'] }).click();
-//         // Territory
-//         await this.page.getByRole('combobox', { name: /Territory/i }).click();
-//         await this.page.getByRole('option', { name: location['Territory'] }).click();
-//     }
+    async _selectComboboxOptionByLabel(label, optionText) {
+        const combo = this.page.getByRole('combobox', { name: new RegExp(label, 'i') });
+        await combo.waitFor({ state: 'visible', timeout: 6000 });
+        await combo.click();
+        const option = this.page.getByRole('option', { name: optionText });
+        await option.waitFor({ state: 'visible', timeout: 6000 });
+        await option.click();
+    }
 
-//     async submitForm() {
-//         await this.page.getByTestId('submit_button').click();
-//         // Confirm dialog
-//         await this.page.getByTestId('confirm_button').click();
-//     }
+    async submitAndConfirm() {
+        const submit = this.page.getByTestId('submit_button');
+        await submit.waitFor({ state: 'visible', timeout: 8000 });
+        await submit.click();
+        const confirm = this.page.getByTestId('confirm_button');
+        await confirm.waitFor({ state: 'visible', timeout: 8000 });
+        await confirm.click();
+    }
 
-//     async getSuccessMessage() {
-//         // Wait for and return the success message
-//         const msg = await this.page.locator('text=created successfully').first();
-//         await msg.waitFor({ state: 'visible', timeout: 5000 });
-//         return msg.textContent();
-//     }
-// }
+    async waitForSuccessToast() {
+        const toast = this.page.locator('text=created successfully');
+        await toast.waitFor({ state: 'visible', timeout: 10000 });
+        return toast.textContent();
+    }
 
-// module.exports = InstitutionalContractorPage;
+    async isContractorListed(email) {
+        // Try search input by testid or fallback to text search
+        try {
+            const search = this.page.getByTestId('contractor_search');
+            await search.fill(email);
+            await search.press('Enter');
+        } catch (e) {
+            // ignore
+        }
+        const row = this.page.locator(`text=${email}`);
+        try {
+            await row.first().waitFor({ state: 'visible', timeout: 8000 });
+            return true;
+        } catch (e) {
+            return false;
+        }
+    }
+}
 
-
+module.exports = InstitutionalContractorMCPPage;

@@ -1,4 +1,4 @@
-// Generated from: features\contractorAdd.feature
+// Generated from: features\contractor-manage.feature
 import { test } from "playwright-bdd";
 
 test.describe('Contractor Creation in Birla Opus Portal', () => {
@@ -27,8 +27,12 @@ test.describe('Contractor Creation in Birla Opus Portal', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\contractorAdd.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\contractor-manage.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
+  page: async ({ page, $prompt }, use) => {
+    $prompt.setPage(page);
+    await use(page);
+  },
 });
 
 const bddFileData = [ // bdd-data-start

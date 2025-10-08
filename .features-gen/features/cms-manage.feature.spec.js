@@ -1,4 +1,4 @@
-// Generated from: features\cmsPages.feature
+// Generated from: features\cms-manage.feature
 import { test } from "playwright-bdd";
 
 test.describe('CMS pages activity into the admin panel of Birla Opus', () => {
@@ -77,8 +77,12 @@ test.describe('CMS pages activity into the admin panel of Birla Opus', () => {
 
 test.use({
   $test: [({}, use) => use(test), { scope: 'test', box: true }],
-  $uri: [({}, use) => use('features\\cmsPages.feature'), { scope: 'test', box: true }],
+  $uri: [({}, use) => use('features\\cms-manage.feature'), { scope: 'test', box: true }],
   $bddFileData: [({}, use) => use(bddFileData), { scope: "test", box: true }],
+  page: async ({ page, $prompt }, use) => {
+    $prompt.setPage(page);
+    await use(page);
+  },
 });
 
 const bddFileData = [ // bdd-data-start

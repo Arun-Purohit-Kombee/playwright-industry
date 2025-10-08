@@ -5,6 +5,11 @@ import { defineBddConfig } from 'playwright-bdd'
 const testDir = defineBddConfig({
   features: 'features/**/*.feature',
   steps: 'features/step_definitions/**/*.js',
+  aiFix: {
+    promptAttachment: true,
+    promptTemplate: '.vscode/prompts/promptTemplate.txt'
+  },
+  verbose: true,
   // tags: '@smoke and not @wip',
 })
 
@@ -29,7 +34,7 @@ export default defineConfig({
       // args: ['--start-maximized'],
       channel: 'msedge',
     },
-    viewport: { width: 1920, height: 1080 },  
+    viewport: { width: 1920, height: 1080 },
     screen: { width: 1920, height: 1080 },
     browserName: 'chromium',
     headless: false,

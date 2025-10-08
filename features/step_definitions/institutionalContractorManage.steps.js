@@ -2,13 +2,13 @@ const { createBdd } = require('playwright-bdd');
 const { Given, When, Then } = createBdd();
 const { expect } = require('@playwright/test');
 const LoginPage = require('../pageObjects/LoginPage');
-const InstMCPPage = require('../pageObjects/InstitutionalContractorMCPPage');
+const InstMCPPage = require('../pageObjects/InstitutionalContractorPage');
 
-// Given('I am logged in as an admin user', async ({ page }) => {
-//     const loginPage = new LoginPage(page);
-//     await loginPage.goto();
-//     await loginPage.loginAsAdmin();
-// });
+Given('I am logged in as an admin user', async ({ page }) => {
+    const loginPage = new LoginPage(page);
+    await loginPage.goto();
+    await loginPage.loginAsAdmin();
+});
 
 When('I navigate to the institutional contractors page', async ({ page }) => {
     const instPage = new InstMCPPage(page);

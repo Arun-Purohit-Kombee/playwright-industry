@@ -18,7 +18,8 @@
     "test:playwright:install:chromium": "npx playwright install chromium",
     "test:playwright:install:firefox": "npx playwright install firefox",
     "test:playwright:install:webkit": "npx playwright install webkit",
-    "test:bdd:ui":"npx bddgen & npx playwright test --ui"
+    "test:bdd:ui": "npx bddgen & npx playwright test --ui",
+    "report": "npx http-server ./cucumber-report -c-1 -a localhost -o index.html"
   },
   "keywords": [],
   "author": "",

@@ -1,6 +1,6 @@
 // @ts-check
 import { defineConfig, devices } from '@playwright/test'
-import { defineBddConfig } from 'playwright-bdd'
+import { defineBddConfig, cucumberReporter } from 'playwright-bdd'
 
 const testDir = defineBddConfig({
   features: 'features/**/*.feature',
@@ -42,7 +42,12 @@ export default defineConfig({
     screenshot: 'on',
     video: 'on'
   },
-  reporter: 'html',
+  reporter: [
+    cucumberReporter('html', {
+      outputFile: 'cucumber-report/index.html',
+      externalAttachments: true,
+    })
+  ],
   projects: [
     // {
     //   name: 'firefox',

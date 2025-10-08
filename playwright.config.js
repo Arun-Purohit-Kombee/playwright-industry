@@ -46,7 +46,13 @@ export default defineConfig({
     cucumberReporter('html', {
       outputFile: 'cucumber-report/index.html',
       externalAttachments: true,
-    })
+    }),
+    [
+      'allure-playwright', {
+        detail: true,
+        outputFolder: 'allure-results',
+        suiteTitle: false
+      }]
   ],
   projects: [
     // {

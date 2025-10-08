@@ -4,7 +4,7 @@ class InstitutionalContractorMCPPage {
     }
 
     async gotoFromDashboard() {
-        // Click using the exact data-testid provided
+        
         const menu = this.page.getByTestId('dashboard_menu_institutional_contractors');
         await menu.waitFor({ state: 'visible', timeout: 15000 });
         await menu.click();

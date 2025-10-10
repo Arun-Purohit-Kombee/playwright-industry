@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "commonjs",
+  "type": "module",
   "scripts": {
     "test:cucumber": "cucumber-js",
     "test:cucumber:tags": "cucumber-js --tags",
@@ -19,6 +19,7 @@
     "test:playwright:install:firefox": "npx playwright install firefox",
     "test:playwright:install:webkit": "npx playwright install webkit",
     "test:bdd:ui": "npx bddgen & npx playwright test --ui",
+    "test:bdd:ui:config": "npx bddgen & npx playwright test --config=playwright.bdd.config.js --ui",
     
     "report": "npx http-server ./cucumber-report -c-1 -a localhost -o index.html",
     "test:playwright:allure": "npx playwright test",

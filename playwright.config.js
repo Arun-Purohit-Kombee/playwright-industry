@@ -17,13 +17,13 @@ export default defineConfig({
   testDir,
 
   // Give failing tests 3 retry attempts
-  //retries: 3,
+  // retries: 3,
 
   // testMatch: [
   //   '**/*.spec.js',
   //   'session 24 e2e shopping flow/Shope2e.spec.js'
   // ],
-  //testMatch is not needed when using playwright-bdd (generated specs)
+  // testMatch is not needed when using playwright-bdd (generated specs)
   timeout: 100 * 1000,
   workers: 2,
   expect: {

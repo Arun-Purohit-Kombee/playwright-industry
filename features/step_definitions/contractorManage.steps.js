@@ -1,8 +1,8 @@
-const { createBdd } = require('playwright-bdd');
+import { createBdd } from 'playwright-bdd';
 const { Given, When, Then } = createBdd();
-const { expect } = require('@playwright/test');
-const LoginPage = require('../pageObjects/LoginPage');
-const ContractorPage = require('../pageObjects/ContractorPage');
+import { expect } from '@playwright/test';
+import LoginPage from '../pageObjects/LoginPage.js';
+import ContractorPage from '../pageObjects/ContractorPage.js';
 
 Given('I am logged in to Birla Opus portal', async ({ page }) => {
     const loginPage = new LoginPage(page);

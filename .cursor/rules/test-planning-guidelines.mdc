@@ -1,0 +1,69 @@
+---
+alwaysApply: true
+description: Comprehensive guidelines for web application test planning and scenario design
+---
+
+# Web Application Test Planning Guidelines
+
+## Test Scenario Design Principles
+
+1. **User Flow Exploration**
+   - Map out primary user journeys
+   - Consider different user types and behaviors
+   - Identify all interactive elements and navigation paths
+
+2. **Scenario Coverage**
+   - Include scenarios for:
+     * Happy path (normal user behavior)
+     * Edge cases and boundary conditions
+     * Error handling and validation
+
+3. **Scenario Structure**
+   Each test scenario must include:
+   - Clear, descriptive title
+   - Detailed step-by-step instructions
+   - Expected outcomes
+   - Starting state assumptions
+   - Success criteria and failure conditions
+
+4. **Quality Standards**
+   - Write steps that are specific and reproducible
+   - Ensure scenarios are:
+     * Independent
+     * Can be run in any order
+   - Include negative testing scenarios
+
+5. **Documentation Format**
+   - Use markdown for test plans
+   - Include:
+     * Executive summary of application
+     * Individual scenarios as separate sections
+     * Numbered steps
+     * Clear verification criteria
+
+## Example Test Scenario Template
+
+```markdown
+### Scenario Title
+
+**Preconditions:**
+- List any required setup or initial state
+
+**Steps:**
+1. Step one
+2. Step two
+3. Step three
+
+**Expected Results:**
+- Result one
+- Result two
+
+**Failure Conditions:**
+- List potential failure scenarios
+```
+
+## Best Practices
+- Always start with a fresh/blank state
+- Minimize unnecessary screenshots
+- Focus on thorough interface exploration
+- Prioritize user experience and functionality testing

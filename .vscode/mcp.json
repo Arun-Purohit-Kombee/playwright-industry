@@ -4,8 +4,17 @@
             "command": "npx",
             "args": [
                 "@playwright/mcp"
-                //"iPhone 13",
             ]
-        }
-    }
+        },
+        "playwright-test": {
+            "type": "stdio",
+            "command": "npx",
+            "args": [
+                "playwright",
+                "run-test-mcp-server"
+            ],
+            "cwd": "${workspaceFolder}"
+        },
+    },
+    "inputs": []
 }

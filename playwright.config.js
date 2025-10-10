@@ -2,7 +2,7 @@
 import { defineConfig, devices } from '@playwright/test'
 
 export default defineConfig({
-  testDir: './tests/opusFlows',
+  //testDir: './tests/opusFlows',
 
   // Give failing tests 3 retry attempts
   //retries: 3,
@@ -12,7 +12,7 @@ export default defineConfig({
     'session 24 e2e shopping flow/Shope2e.spec.js'
   ],
   timeout: 100 * 1000,
-  workers: 2,
+  workers: 1,
   expect: {
     timeout: 40 * 1000
   },

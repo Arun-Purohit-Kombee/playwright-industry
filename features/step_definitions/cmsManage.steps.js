@@ -1,8 +1,8 @@
-const { createBdd } = require('playwright-bdd');
+import { createBdd } from 'playwright-bdd';
 const { Given, When, Then } = createBdd();
-const { expect } = require('@playwright/test');
-const LoginPage = require('../pageObjects/LoginPage');
-const CmsPage = require('../pageObjects/CmsPage');
+import { expect } from '@playwright/test';
+import { LoginPage } from '../pageObjects/LoginPage';
+import { CmsPage } from '../pageObjects/CmsPage';
 
 const BASE_URL = process.env.OPUS_BASE_URL || 'https://qa-contractorportal.birlaopus.com';
 const QA_EMAIL = process.env.OPUS_EMAIL || 'prachi@adityabirla.com';

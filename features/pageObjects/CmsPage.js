@@ -43,6 +43,6 @@ class CmsPage {
     }
 }
 
-module.exports = CmsPage;
+export default CmsPage;
 
 

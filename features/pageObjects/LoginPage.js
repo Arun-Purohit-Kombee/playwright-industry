@@ -26,7 +26,7 @@ class LoginPage {
 
     async loginAsAdmin() {
         // Use a default admin user and static OTP as per test convention
-        await this.login('prachi@adityabirla.com', '123456');
+        await this.login('sparkle.testpainter1@adityabirla.com', '123456');
     }
 }
 
